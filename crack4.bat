@@ -53,7 +53,17 @@ if exist "%folder%" (
                 if not exist "%%~dpF\steam_interfaces.txt" (
                     start int.exe steam_api.dll
                     echo generando steam_interfaces!.)
+            if not exist "%%~dpF\steam_appid.txt" (
+                set /p "inputAppID=Ingresa el App ID (o deja vacío para omitir): "
+                if "!inputAppID!" neq "" (
+                    (
+                        echo !inputAppID!
+                    ) > "%%~dpF\steam_appid.txt"
+                    echo Se ha creado el archivo "steam_appid.txt" en la carpeta "%%~dpF".
+                ) else (
+                    echo No se ha ingresado ningún App ID. Se omitirá))
             REM Reemplazar los archivos encontrados en la carpeta seleccionada si son más recientes
+            xcopy /D /Y "%%~nxF" "%folder%\backup"
             xcopy /D /Y "%currentDir%\steam_api.dll" "%%~dpF" /EXCLUDE:%BackupFolder%
             xcopy /D /Y "%currentDir%\steam_api64.dll" "%%~dpF" /EXCLUDE:%BackupFolder%
             echo Se han reemplazado los archivos en la carpeta "%%~dpF".
@@ -61,7 +71,8 @@ if exist "%folder%" (
     )
     for /r "%folder%" %%F in (int.exe) do (
         if exist "%%F" (
-            del int.exe
+            timeout 1 > nul
+            del /F int.exe
         ))
 
 ) else (
