@@ -14,7 +14,7 @@ if exist "%folder%" (
     cd /d "%folder%"
     echo La carpeta %folder% se ha establecido como directorio actual.
 
-    set /p exe=Por favor, introduce el nombre del exe: 
+    set /p exe=Por favor, introduce el nombre del exe sin añadir .exe al final : 
 
     REM Buscar el archivo .exe en todas las carpetas y subcarpetas
     set "exeFilePath="
